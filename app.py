@@ -4,7 +4,6 @@ import openpyxl
 import io
 import os
 
-# Sayfa Yapılandırması (Modern ve Sade Tasarım için Geniş Ekran Modu)
 st.set_page_config(
     page_title="DataMorph // Universal Data Converter",
     page_icon="🔄",
@@ -12,8 +11,6 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# ----------------- DİL VE ÇEVİRİ SİSTEMİ (TRANSLATION SYSTEM) -----------------
-# English is set as the default/primary language (EN), Turkish is the secondary (TR)
 LANGUAGES = {
     "EN": {
         "page_title": "DataMorph // Universal Data Converter & Cleaner",
@@ -93,26 +90,21 @@ LANGUAGES = {
     }
 }
 
-# Premium UI/UX için Gelişmiş CSS Tasarım Sistemi Enjeksiyonu
 st.markdown("""
 <style>
-/* Modern Google Fontu (Outfit) Entegrasyonu */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
-/* Tüm Uygulama ve Zemin Özelleştirmeleri */
 html, body, [data-testid="stAppViewContainer"] {
     font-family: 'Outfit', sans-serif;
     background-color: #0b0f19;
     color: #e2e8f0;
 }
 
-/* Üst Header Blur Efekti */
 [data-testid="stHeader"] {
     background-color: rgba(11, 15, 25, 0.8) !important;
     backdrop-filter: blur(12px);
 }
 
-/* Glassmorphism Konteyner Sınıfı (Özel Kutular İçin) */
 .glass-card {
     background: rgba(17, 25, 40, 0.65);
     backdrop-filter: blur(12px) saturate(180%);
@@ -124,7 +116,6 @@ html, body, [data-testid="stAppViewContainer"] {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-/* Gradyan Başlık Tasarımı */
 .gradient-title {
     background: linear-gradient(135deg, #a78bfa 0%, #22d3ee 100%);
     -webkit-background-clip: text;
@@ -142,7 +133,6 @@ html, body, [data-testid="stAppViewContainer"] {
     margin-bottom: 30px;
 }
 
-/* Özel Metrik Panelleri */
 .metric-container {
     display: flex;
     gap: 16px;
@@ -181,7 +171,6 @@ html, body, [data-testid="stAppViewContainer"] {
     font-weight: 500;
 }
 
-/* Seçenek Kutuları (Checkbox) Tasarımı */
 div[data-testid="stCheckbox"] {
     background: rgba(255, 255, 255, 0.025);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -197,14 +186,12 @@ div[data-testid="stCheckbox"]:hover {
     transform: translateX(4px);
 }
 
-/* Tablo Sınırlarını Yumuşatma */
 div[data-testid="stDataFrame"] {
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
     border-radius: 12px !important;
     overflow: hidden;
 }
 
-/* Premium "Temizle ve İndir" Butonu */
 div.stButton > button, div.stDownloadButton > button {
     background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%) !important;
     color: #ffffff !important;
@@ -231,12 +218,10 @@ div.stButton > button:active, div.stDownloadButton > button:active {
     transform: translateY(1px) !important;
 }
 
-/* Dil seçici alanı için küçük düzenleme */
 .lang-selector-box {
     margin-bottom: 20px;
 }
 
-/* Alt Bilgi Footer Alanı */
 .footer {
     text-align: center;
     margin-top: 50px;
@@ -248,21 +233,15 @@ div.stButton > button:active, div.stDownloadButton > button:active {
 </style>
 """, unsafe_allow_html=True)
 
-# ----------------- EN ÜST ALAN: BAŞLIK VE DİL SEÇİCİ -----------------
-# 2 Kolon: Sol kolon gradient başlık, Sağ kolon modern dil seçici dropdown
 col_header_left, col_header_right = st.columns([5, 1], gap="medium")
 
 with col_header_right:
-    # Language dropdown (English is default with index 0)
     lang_choice = st.selectbox(
         "🌐 Language / Dil",
         options=["English (EN)", "Türkçe (TR)"],
-        index=0,
-        help="Switch application language / Uygulama dilini değiştirin"
+        index=0
     )
-    # Get lang code
     lang_code = "EN" if "English" in lang_choice else "TR"
-    # Load translation dictionary
     t = LANGUAGES[lang_code]
 
 with col_header_left:
@@ -270,9 +249,7 @@ with col_header_left:
     st.markdown(f'<div class="gradient-subtitle">{t["subtitle"]}</div>', unsafe_allow_html=True)
 
 
-# ----------------- YARDIMCI FONKSİYONLAR -----------------
 def get_file_size(uploaded_file):
-    """Dosya boyutunu okuyup uygun birimle (KB veya MB) döndürür."""
     try:
         bytes_data = uploaded_file.getvalue()
         size_bytes = len(bytes_data)
@@ -283,7 +260,7 @@ def get_file_size(uploaded_file):
     except Exception:
         return "N/A"
 
-# ----------------- DOSYA YÜKLEME ALANI -----------------
+
 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
 uploaded_file = st.file_uploader(
     t["uploader_label"], 
@@ -293,18 +270,15 @@ uploaded_file = st.file_uploader(
 st.markdown('</div>', unsafe_allow_html=True)
 
 if uploaded_file is not None:
-    # Dosya adını ve uzantısını alalım
     file_name = uploaded_file.name
     file_extension = os.path.splitext(file_name)[1].lower()
     
-    # Dosyayı Pandas DataFrame olarak okuma
     df_raw = None
     read_success = True
     error_msg = ""
     
     try:
         if file_extension == '.csv':
-            # İlk olarak utf-8 ile okumayı dene, hata olursa latin-1 dene (Türkçe karakter desteği için)
             try:
                 df_raw = pd.read_csv(uploaded_file)
             except UnicodeDecodeError:
@@ -318,27 +292,20 @@ if uploaded_file is not None:
         read_success = False
         error_msg = str(e)
         
-    # Eğer dosya okuma başarılıysa ana paneli gösterelim
     if read_success and df_raw is not None:
-        # Boş veri kontrolü
         if df_raw.empty:
             st.warning(t["empty_file_warning"])
         else:
-            # Temel istatistikleri ve bilgileri hazırlayalım
             original_rows = len(df_raw)
             original_cols = len(df_raw.columns)
             total_missing = df_raw.isnull().sum().sum()
             file_size_str = get_file_size(uploaded_file)
             
-            # Uygulama Arayüzünü 2 Kolona Bölelim
-            # Sol Kolon: Temizleme Ayarları & Dosya Bilgileri
-            # Sağ Kolon: Veri Önizleme & Son Dönüştürme Kontrolleri
             col_left, col_right = st.columns([1, 2], gap="large")
             
             with col_left:
                 st.markdown(f'<h3 style="color: #a78bfa; margin-bottom: 15px;">{t["metrics_title"]}</h3>', unsafe_allow_html=True)
                 
-                # Şık Metrik Kartları
                 st.markdown(f"""
                 <div class="metric-container">
                     <div class="metric-card">
@@ -366,7 +333,6 @@ if uploaded_file is not None:
                 
                 st.markdown(f'<h3 style="color: #a78bfa; margin-bottom: 15px;">{t["cleaning_title"]}</h3>', unsafe_allow_html=True)
                 
-                # Temizleme Seçenekleri Checkbox Alanı
                 clean_missing = st.checkbox(
                     t["clean_missing_label"],
                     value=False,
@@ -385,35 +351,27 @@ if uploaded_file is not None:
                     help=t["clean_dup_help"]
                 )
                 
-            # Veriyi temizleme ayarlarına göre dönüştürelim
             df_cleaned = df_raw.copy()
             
-            # Adım 1: Boş ve eksik satırları sil
             if clean_missing:
                 df_cleaned = df_cleaned.dropna()
                 
-            # Adım 2: Metin alanlarını standartlaştır (Title Case)
             if clean_text:
-                # Sadece object/string türündeki sütunları tespit edip dönüştür
                 text_columns = df_cleaned.select_dtypes(include=['object', 'string']).columns
                 for col in text_columns:
-                    # null değerleri bozmadan dönüştürme işlemi
                     df_cleaned[col] = df_cleaned[col].apply(
                         lambda x: str(x).title() if pd.notnull(x) and str(x).strip() != '' else x
                     )
             
-            # Adım 3: Yinelenen satırları temizle
             if clean_duplicates:
                 df_cleaned = df_cleaned.drop_duplicates()
                 
-            # Temizlenmiş veri boyutları ve değişim metrikleri
             cleaned_rows = len(df_cleaned)
             rows_deleted = original_rows - cleaned_rows
             
             with col_right:
                 st.markdown(f'<h3 style="color: #22d3ee; margin-bottom: 15px;">{t["preview_title"]}</h3>', unsafe_allow_html=True)
                 
-                # Orijinal ve Temizlenmiş durumların farkını gösteren sekmeler (Tabs)
                 tab1, tab2 = st.tabs([t["tab_processed"], t["tab_original"]])
                 
                 with tab1:
@@ -422,7 +380,6 @@ if uploaded_file is not None:
                     else:
                         st.caption(t["no_rows_deleted_info"])
                     
-                    # İlk 5 satırı şık bir tabloda gösterelim
                     st.dataframe(df_cleaned.head(5), use_container_width=True)
                     
                 with tab2:
@@ -433,20 +390,17 @@ if uploaded_file is not None:
                 
                 st.markdown(f'<h3 style="color: #22d3ee; margin-bottom: 15px;">{t["download_title"]}</h3>', unsafe_allow_html=True)
                 
-                # Hedef format seçimi
                 target_format = st.selectbox(
                     t["target_format_label"],
                     options=["CSV (.csv)", "Excel (.xlsx)", "JSON (.json)"],
                     index=0
                 )
                 
-                # Bellek içi tampon oluşturma ve indirme butonu
                 download_ready = False
                 output_bytes = None
                 output_mime = ""
                 output_filename = ""
                 
-                # Format eşleştirme
                 if target_format == "CSV (.csv)":
                     try:
                         csv_string = df_cleaned.to_csv(index=False)
@@ -460,9 +414,7 @@ if uploaded_file is not None:
                         
                 elif target_format == "Excel (.xlsx)":
                     try:
-                        # Bellek içinde Excel dosyası oluşturmak için BytesIO kullanımı
                         excel_buffer = io.BytesIO()
-                        # openpyxl motoru ile Excel dosyasına yazma
                         with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
                             df_cleaned.to_excel(writer, index=False, sheet_name='DataMorph_Clean')
                         output_bytes = excel_buffer.getvalue()
@@ -475,7 +427,6 @@ if uploaded_file is not None:
                         
                 elif target_format == "JSON (.json)":
                     try:
-                        # JSON verisini düzgün satır aralıkları çıktı alma
                         json_str = df_cleaned.to_json(orient='records', force_ascii=False, indent=4)
                         output_bytes = json_str.encode('utf-8')
                         output_mime = "application/json"
@@ -485,9 +436,7 @@ if uploaded_file is not None:
                     except Exception as e:
                         st.error(f"JSON Conversion Error: {str(e)}")
                 
-                # Dinamik İndirme Butonu Gösterimi
                 if download_ready and output_bytes is not None:
-                    # İndirme butonunun üzerine gelindiğinde kullanıcıyı bilgilendirecek metin
                     btn_format_name = target_format.split(' ')[0]
                     btn_label = t["download_btn_label"].format(format=btn_format_name)
                     st.download_button(
@@ -502,10 +451,8 @@ if uploaded_file is not None:
         st.error(t["read_error"].format(error=error_msg))
 
 else:
-    # Dosya yüklenmediğinde şık bir bilgilendirme karşılama alanı gösterelim
     st.info(t["welcome_info"])
     
-    # Uygulama özellikleri hakkında kısa görsel kartlar sunalım
     col_feat1, col_feat2, col_feat3 = st.columns(3)
     with col_feat1:
         st.markdown(f"""
@@ -529,5 +476,4 @@ else:
         </div>
         """, unsafe_allow_html=True)
 
-# ----------------- UYGULAMA ALT BİLGİSİ -----------------
 st.markdown(f'<div class="footer">{t["footer_text"]}</div>', unsafe_allow_html=True)
