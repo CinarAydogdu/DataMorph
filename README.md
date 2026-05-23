@@ -4,6 +4,9 @@ DataMorph is a super functional, Python-based web application that allows you to
 
 Equipped with a custom premium dark mode interface, glassmorphism design effects, and real-time data metrics, it makes modern data preparation, cleaning, and conversion an engaging and effortless experience.
 
+### 🔗 Live Demo
+Try the application instantly in your browser: **[https://cinarsdatamorphapp.streamlit.app/](https://cinarsdatamorphapp.streamlit.app/)**
+
 ---
 
 ## 🚀 Features
@@ -21,7 +24,7 @@ Equipped with a custom premium dark mode interface, glassmorphism design effects
 * **Dynamic Metric Cards**: Displays total rows, column count, file size, and missing values in real-time inside sleek glassmorphic containers.
 * **Real-time Change Analysis**: Dynamically calculates and displays exactly how many rows are filtered out as you select/deselect cleaning options.
 * **Side-by-Side Preview Tabs**: Seamlessly compare the "Processed Data" preview and the "Original Raw Data" preview side-by-side using high-fidelity tabs.
-* **Custom Styling**: Fully customized theme containing the modern "Outfit" font family, frosted glass cards (`backdrop-filter: blur(12px)`), elegant gradients, and micro-animated buttons/checkboxes.
+* **Custom Styling**: Fully customized theme containing the modern "Outfit" font family, frosted glass cards (`backdrop-filter: blur(12px)`), elegant gradients, and micro-animated widgets.
 
 ---
 
@@ -34,7 +37,7 @@ Equipped with a custom premium dark mode interface, glassmorphism design effects
 
 ---
 
-## 💻 Installation & Running
+## 💻 Installation & Running Locally
 
 Follow these simple steps to run the application locally on your computer:
 
