@@ -1,0 +1,72 @@
+[
+    {
+        "Full Name": "jOHN sMITH",
+        "City": "nEw yOrK",
+        "Job Title": "ENGINEER",
+        "Salary": 75000,
+        "Registration Date": "2026-01-15"
+    },
+    {
+        "Full Name": "emily DAVIS",
+        "City": "london",
+        "Job Title": "Developer",
+        "Salary": 82000,
+        "Registration Date": "2026-02-20"
+    },
+    {
+        "Full Name": "jOHN sMITH",
+        "City": "nEw yOrK",
+        "Job Title": "ENGINEER",
+        "Salary": 75000,
+        "Registration Date": "2026-01-15"
+    },
+    {
+        "Full Name": "bOb jONES",
+        "City": null,
+        "Job Title": "Designer",
+        "Salary": 60000,
+        "Registration Date": "2026-03-10"
+    },
+    {
+        "Full Name": "sArAh cOnNoR",
+        "City": "PaRiS",
+        "Job Title": "ANALYST",
+        "Salary": null,
+        "Registration Date": "2026-04-05"
+    },
+    {
+        "Full Name": "emily DAVIS",
+        "City": "london",
+        "Job Title": "Developer",
+        "Salary": 82000,
+        "Registration Date": "2026-02-20"
+    },
+    {
+        "Full Name": "ALEX GREEN",
+        "City": "berlin",
+        "Job Title": "manager",
+        "Salary": 95000,
+        "Registration Date": "2026-05-01"
+    },
+    {
+        "Full Name": "dIaNa pRiNcE",
+        "City": "PaRiS",
+        "Job Title": "Assistant",
+        "Salary": 48000,
+        "Registration Date": "2026-05-12"
+    },
+    {
+        "Full Name": "dIaNa pRiNcE",
+        "City": "PaRiS",
+        "Job Title": "Assistant",
+        "Salary": 48000,
+        "Registration Date": "2026-05-12"
+    },
+    {
+        "Full Name": "gEoRgE cLoOnEy",
+        "City": "sYdNeY",
+        "Job Title": "Technician",
+        "Salary": 53000,
+        "Registration Date": null
+    }
+]
